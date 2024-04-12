@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
+// Transaction entity class used for data exchange with the database.
+
 @Data
 @Builder
 @AllArgsConstructor

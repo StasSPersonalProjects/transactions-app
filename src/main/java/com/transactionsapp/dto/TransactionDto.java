@@ -10,13 +10,15 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+// Data transfer object for transferring the transaction data.
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class TransactionDto {
 
-    @Pattern(regexp = "(?i)\\b(CREDIT|DEBIT)\\b")
+    @Pattern(regexp = "(?i)\\b(CREDIT|DEBIT)\\b", message = "Transaction must be of type credit or debit only!")
     private Type type;
     @NotNull(message = "Transaction amount field must not be empty.")
     private double amount;

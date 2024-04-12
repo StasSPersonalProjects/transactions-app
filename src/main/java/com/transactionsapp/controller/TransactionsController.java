@@ -2,6 +2,7 @@ package com.transactionsapp.controller;
 
 import com.transactionsapp.dto.TransactionDto;
 import com.transactionsapp.entities.Transaction;
+import com.transactionsapp.service.CurrencyService;
 import com.transactionsapp.service.TransactionsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
+// Controller class for receiving requests,
+// checking the data,
+// proceeding to the service class and responding accordingly.
+
 @RestController
 @RequestMapping("/app/transactions")
 @Validated
@@ -20,6 +26,8 @@ public class TransactionsController {
 
     @Autowired
     private TransactionsService transactionsService;
+    @Autowired
+    private CurrencyService currencyService;
 
     static Logger LOG = LoggerFactory.getLogger(TransactionsController.class);
 
@@ -99,6 +107,12 @@ public class TransactionsController {
         return transactionsService.getCurrentBalance();
     }
 
+    /**
+     * @param fetchedTransactions fetched transactions, provided to check them and prepare a response
+     * @return the result made of the provided fetched transactions
+     * @param <T> the result might be of type Transaction or null
+     * @throws ClassCastException
+     */
     private <T> T checkFetchedTransactions(List<Transaction> fetchedTransactions) throws ClassCastException {
         LOG.debug("Found {} transactions.", fetchedTransactions.size());
         if (fetchedTransactions.isEmpty()) {
@@ -109,5 +123,11 @@ public class TransactionsController {
                 .map(TransactionDto::of)
                 .toList();
         return (T) result;
+    }
+
+    @GetMapping(value = "/convert")
+    public ResponseEntity<Double> convertCurrency(@RequestParam Double amountInILS, @RequestParam String targetCurrency) throws Exception {
+        LOG.debug("Received request to convert {} ILS to {}.", amountInILS, targetCurrency);
+        return ResponseEntity.ok().body(currencyService.convertCurrency(amountInILS, targetCurrency));
     }
 }

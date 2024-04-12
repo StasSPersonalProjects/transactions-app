@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+// Service class containing methods for manipulating the database.
+
 @Service
 public class TransactionsService {
 
