@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 // Data transfer object for transferring the transaction data.
 
@@ -23,7 +23,7 @@ public class TransactionDto {
     @NotNull(message = "Transaction amount field must not be empty.")
     private double amount;
     private String description;
-    private LocalDateTime date;
+    private LocalDate date;
 
     public static TransactionDto of(Transaction transaction) {
         return TransactionDto.builder()

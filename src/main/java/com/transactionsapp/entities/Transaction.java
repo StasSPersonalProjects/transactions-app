@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 // Transaction entity class used for data exchange with the database.
@@ -28,7 +28,14 @@ public class Transaction {
     private Type type;
     private double amount;
     private String description;
-    private LocalDateTime date;
+    private LocalDate date;
+
+    public Transaction (Type type, double amount, String description, LocalDate date) {
+        this.type = type;
+        this.amount = amount;
+        this.description = description;
+        this.date = date;
+    }
 
     public static Transaction of(TransactionDto transactionDto) {
         return Transaction.builder()
